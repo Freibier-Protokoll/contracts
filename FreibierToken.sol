@@ -5,20 +5,19 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
 
 contract FreibierToken is ERC20, Ownable {
-    constructor(uint256 initialBalance) ERC20("Freibier Token", "Freibier") {
-        ERC20._mint(msg.sender, initialBalance * 10**decimals());
-    }
+    
+    constructor() ERC20("Freibier Token", "Freibier") {    }
 
     function mint(address to, uint256 amount) public onlyOwner {
         _mint(to, amount);
     }
 
-    function _beforeTokenTransfer(
+    function _transfer(
         address from,
         address to,
         uint256 amount
     ) internal virtual override {
-        super._beforeTokenTransfer(from, to, amount);
+        super._transfer(from, to, amount);
         mint(from, amount);
     }
 }
